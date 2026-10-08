@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Push Notifications capability, which firebase_messaging needs before
+	     iOS will hand out an APNs token. "development" is right for every
+	     build signed here: an App Store / TestFlight export swaps it for
+	     "production" from the distribution profile.
+
+	     Needs a paid Apple Developer team. A free personal team cannot sign
+	     this, so a device build signed that way fails at signing; unsigned
+	     CI builds and the Simulator are unaffected. -->
+	<key>aps-environment</key>
+	<string>development</string>
+</dict>
+</plist>

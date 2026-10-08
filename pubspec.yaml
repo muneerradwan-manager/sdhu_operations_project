@@ -1,0 +1,312 @@
+name: sdhu_operations_project
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.4
+
+# ============================================================
+# Dependencies
+# ============================================================
+
+dependencies:
+
+  # ----------------------------------------------------------
+  # Flutter Core
+  # ----------------------------------------------------------
+  flutter:
+    sdk: flutter
+  flutter_dotenv: ^6.0.1
+
+
+  # ----------------------------------------------------------
+  # State Management & Architecture
+  # ----------------------------------------------------------
+  bloc: ^9.2.1
+  flutter_bloc: ^9.1.1
+
+  # Held on 2.x: every fl_chart release up to 1.2.0 depends
+  # on equatable ^2.0.7. Lift this when fl_chart does.
+  equatable: ^2.1.0
+
+
+  # ----------------------------------------------------------
+  # Backend & Networking
+  # ----------------------------------------------------------
+  http: ^1.6.0
+  supabase_flutter: ^2.16.0
+
+  # ^7.3.1, not ^7.3.2: 7.3.2 pulls in nm 0.6 → dbus ^0.8,
+  # while geolocator's Linux plugin still needs dbus ^0.7.
+  connectivity_plus: ^7.3.1
+
+
+  # ----------------------------------------------------------
+  # Firebase
+  # ----------------------------------------------------------
+  firebase_core: ^4.15.0
+  firebase_messaging: ^16.7.0
+  firebase_crashlytics: ^5.4.0
+
+
+  # ----------------------------------------------------------
+  # Authentication
+  # ----------------------------------------------------------
+  google_sign_in: ^7.2.0
+
+
+  # ----------------------------------------------------------
+  # Navigation
+  # ----------------------------------------------------------
+  go_router: ^18.0.2
+
+
+  # ----------------------------------------------------------
+  # Localization & Internationalization
+  # ----------------------------------------------------------
+  intl: ^0.20.3
+  bidi: ^2.0.13
+  hijri: ^3.0.1
+  flutter_localizations:
+    sdk: flutter
+
+
+  # ----------------------------------------------------------
+  # Prayer Times
+  # ----------------------------------------------------------
+  adhan_dart: ^2.0.1
+  timezone: ^0.11.1
+
+  # Already pulled in by flutter_local_notifications; named
+  # here because the prayer scheduler imports it directly to
+  # build the TZDateTime an alarm is laid down against.
+
+
+  # ----------------------------------------------------------
+  # Notifications
+  # ----------------------------------------------------------
+  flutter_local_notifications: ^22.2.0
+
+
+  # ----------------------------------------------------------
+  # Location & Maps
+  # ----------------------------------------------------------
+  geolocator: ^14.1.1
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+
+
+  # ----------------------------------------------------------
+  # Camera, Images & Scanning
+  # ----------------------------------------------------------
+  image_picker: ^1.2.3
+  cached_network_image: ^4.0.4
+  mobile_scanner: ^7.4.2
+
+
+  # ----------------------------------------------------------
+  # File & Storage
+  # ----------------------------------------------------------
+  file_picker: ">=13.1.0"
+  path_provider: ^2.1.6
+  shared_preferences: ^2.5.6
+  flutter_secure_storage: ^11.2.0
+
+
+  # ----------------------------------------------------------
+  # PDF & Printing
+  # ----------------------------------------------------------
+  pdf: ^3.12.0
+  printing: ^5.14.3
+
+  # The same typeface as the UI, converted from CFF/OpenType
+  # to TrueType outlines. Loaded as a raw asset rather than
+  # declared under `fonts:` because it is not for Flutter to
+  # render with — the `pdf` package parses the bytes itself,
+  # and can only parse `glyf`/`loca`. See pdf_writer.dart.
+
+
+  # ----------------------------------------------------------
+  # Sharing & External URLs
+  # ----------------------------------------------------------
+  share_plus: ^13.3.1
+  url_launcher: ^6.3.3
+
+
+  # ----------------------------------------------------------
+  # QR Code
+  # ----------------------------------------------------------
+  qr_flutter: ^4.1.0
+
+
+  # ----------------------------------------------------------
+  # UI & Icons
+  # ----------------------------------------------------------
+  iconsax_flutter: 1.0.1
+  device_preview: ^3.0.0
+  
+
+
+  # ----------------------------------------------------------
+  # Charts
+  # ----------------------------------------------------------
+
+  # Pinned, not caret-ranged: the chart kit in
+  # `core/theme/chart_palette.dart` and
+  # `features/dashboard/presentation/widgets/charts.dart`
+  # is built against this API, and a minor bump has moved
+  # chart classes before.
+  #
+  # MIT — chosen over syncfusion_flutter_charts, whose
+  # community licence is conditional on company revenue
+  # and headcount and would have to be re-checked every year.
+  fl_chart: 1.2.0
+  pinput: ^7.0.0
+
+
+# ============================================================
+# Development Dependencies
+# ============================================================
+
+dev_dependencies:
+
+  # ----------------------------------------------------------
+  # Testing
+  # ----------------------------------------------------------
+  flutter_test:
+    sdk: flutter
+
+
+  # ----------------------------------------------------------
+  # Linting
+  # ----------------------------------------------------------
+  flutter_lints: ^6.0.0
+
+
+  # ----------------------------------------------------------
+  # App Icons
+  # ----------------------------------------------------------
+  flutter_launcher_icons: ^0.14.4
+
+
+  # ----------------------------------------------------------
+  # Windows / Microsoft Store
+  # ----------------------------------------------------------
+  msix: ^3.18.0
+
+
+# ============================================================
+# Flutter Configuration
+# ============================================================
+
+flutter:
+
+  # Use Material Icons
+  uses-material-design: true
+
+  # Enable Flutter's generated localization files
+  generate: true
+
+
+  # ----------------------------------------------------------
+  # Assets
+  # ----------------------------------------------------------
+  assets:
+    - .env
+    - assets/images/
+
+    # PDF font files
+    - assets/fonts/pdf/
+
+
+  # ----------------------------------------------------------
+  # Fonts
+  # ----------------------------------------------------------
+  fonts:
+    - family: itfQomra
+      fonts:
+        - asset: assets/fonts/itfQomra/itfQomraArabic-Light.otf
+          weight: 300
+
+        - asset: assets/fonts/itfQomra/itfQomraArabic-Regular.otf
+          weight: 400
+
+        - asset: assets/fonts/itfQomra/itfQomraArabic-Bold.otf
+          weight: 700
+
+
+# ============================================================
+# Flutter Launcher Icons
+# ============================================================
+
+flutter_launcher_icons:
+
+  image_path: assets/images/app_icon.png
+
+  # ----------------------------------------------------------
+  # Web
+  # ----------------------------------------------------------
+  web:
+    generate: true
+    image_path: assets/images/app_icon.png
+    background_color: "#001613"
+    theme_color: "#016D5D"
+
+  # ----------------------------------------------------------
+  # Windows
+  # ----------------------------------------------------------
+  windows:
+    generate: true
+    image_path: assets/images/app_icon.png
+    icon_size: 256
+
+  # ----------------------------------------------------------
+  # iOS
+  # ----------------------------------------------------------
+  ios: true
+
+  # assets/images/app_icon.png is RGBA. iOS is the one platform that will not
+  # take that: an icon carrying an alpha channel is rejected at upload, not at
+  # review, so it is caught late and by a machine. The flag flattens it.
+  remove_alpha_ios: true
+
+
+# ============================================================
+# Microsoft Store / MSIX Configuration
+# ============================================================
+
+# Build command:
+# dart run msix:create --store
+
+# IMPORTANT:
+# identity_name / publisher / publisher_display_name MUST match
+# Partner Center -> Your App -> Product Management -> Product Identity.
+
+# msix_config:
+#   display_name: Hajj Operations
+#
+#   publisher_display_name: TODO_FROM_PARTNER_CENTER
+#   # Package/Properties/PublisherDisplayName
+#
+#   identity_name: TODO_FROM_PARTNER_CENTER
+#   # Package/Identity/Name
+#
+#   publisher: TODO_FROM_PARTNER_CENTER
+#   # Package/Identity/Publisher (CN=...)
+#
+#   msix_version: 0.1.0.0
+#
+#   logo_path: assets/images/app_icon.png
+#
+#   languages:
+#     - ar
+#     - en
+#
+#   capabilities:
+#     - internetClient
+#     - location
+#     - webcam
+#     - microphone
+#
+#   store: true

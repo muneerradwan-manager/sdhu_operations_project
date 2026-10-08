@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The small icon on a prayer notification.
+
+    A status-bar icon is used as a MASK: Android keeps the alpha channel and
+    throws every colour away, then tints what is left. So this is a solid
+    silhouette on transparency — a dome, its band, its hall and two minarets —
+    and not the launcher icon, which comes out of that process as a white blob.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Finial. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M11.4,2.0h1.2v1.9h-1.2z" />
+    <!-- Dome, sitting on its own straight edge. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M6.2,11.3v-1.6a5.8,5.8 0 0,1 11.6,0v1.6z" />
+    <!-- The band beneath it. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M4.8,12.3h14.4v1.9h-14.4z" />
+    <!-- The hall. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M5.8,15.2h12.4v6.8h-12.4z" />
+    <!-- Two minarets. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M2.0,7.6h1.9v14.4h-1.9z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M20.1,7.6h1.9v14.4h-1.9z" />
+</vector>

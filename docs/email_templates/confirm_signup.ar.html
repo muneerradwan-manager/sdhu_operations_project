@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
+    <title>رمز التحقّق</title>
+  </head>
+  <body style="margin:0; padding:0; background-color:#F3F0EB;">
+    <div style="display:none; max-height:0; overflow:hidden; opacity:0;">
+      رمزك للدخول إلى تطبيق إدارة الحج والعمرة. صالح لمدة ساعة.
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+           style="background-color:#F3F0EB; padding:24px 12px;">
+      <tr>
+        <td align="center">
+
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                 style="max-width:520px; background-color:#FFFFFF; border-radius:16px;
+                        border:1px solid #E8E2DA; overflow:hidden;
+                        font-family:-apple-system, 'Segoe UI', Tahoma, 'Noto Sans Arabic', Arial, sans-serif;">
+
+            <tr>
+              <td style="background-color:#00594F; padding:22px 28px;" align="right">
+                <div style="color:#FFFFFF; font-size:17px; font-weight:700; letter-spacing:0.2px;">
+                  إدارة الحج والعمرة
+                </div>
+                <div style="color:#D9C89E; font-size:12px; padding-top:4px;">
+                  تأكيد إنشاء الحساب
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:28px 28px 8px 28px;" align="right">
+                <div style="color:#001614; font-size:20px; font-weight:700; line-height:1.5;">
+                  رمز التحقّق الخاص بك
+                </div>
+                <div style="color:#5E5E5E; font-size:14px; line-height:1.9; padding-top:10px;">
+                  أدخل هذا الرمز في التطبيق لإتمام إنشاء حسابك على
+                  <span dir="ltr" style="color:#001614; font-weight:600;">{{ .Email }}</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:20px 28px 6px 28px;" align="center">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
+                       style="background-color:#F3F0EB; border:1px solid #E4DDD3; border-radius:12px;">
+                  <tr>
+                    <td align="center" style="padding:22px 12px;">
+                      <div dir="ltr"
+                           style="color:#00594F; font-size:34px; font-weight:700;
+                                  letter-spacing:10px; text-indent:10px;
+                                  font-family:'SFMono-Regular', Consolas, 'Courier New', monospace;">
+                        {{ .Token }}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:6px 28px 0 28px;" align="center">
+                <div style="color:#8A8A8A; font-size:12px; line-height:1.8;">
+                  الرمز صالح لمدة ساعة واحدة، ويُستخدم مرّة واحدة
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:22px 28px 0 28px;">
+                <div style="height:1px; background-color:#E8E2DA; font-size:0; line-height:0;">&nbsp;</div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:18px 28px 28px 28px;" align="right">
+                <div style="color:#5E5E5E; font-size:13px; line-height:1.9;">
+                  لم تطلب هذا الرمز؟ تجاهل هذه الرسالة — لن يُنشأ أي حساب دون إدخاله.
+                </div>
+                <div style="color:#8A8A8A; font-size:12px; line-height:1.8; padding-top:10px;">
+                  ولا تُشارك الرمز مع أحد. لن يطلبه منك أحد من الإدارة.
+                </div>
+              </td>
+            </tr>
+
+          </table>
+
+          <div style="max-width:520px; padding:16px 8px 0 8px; color:#8A8A8A; font-size:11px;
+                      line-height:1.8; text-align:center;
+                      font-family:-apple-system, 'Segoe UI', Tahoma, 'Noto Sans Arabic', Arial, sans-serif;">
+            رسالة آلية من تطبيق إدارة الحج والعمرة — لا تحتاج إلى ردّ
+          </div>
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Map tiles and Supabase. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Taking the admin's current position when pinning a hotel on the map.
+         Coarse is enough to place a building; fine sharpens it when granted. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- Reading the code fixed at a camp gate to report an arrival. Declared
+         because the scanner draws the camera preview inside this app; the photo
+         attachments do not need it, because those hand the job to the camera
+         app through an intent and get a file back. The feature is not required
+         to install: a phone without a camera keeps every other part of the app,
+         and an arrival can still be reported by position alone. -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <!-- Prayer alerts live in Android's alarm service rather than in this app:
+         the process is not running when الفجر comes in, and there is no timer
+         to rely on. A reboot clears every alarm set, so they have to be laid
+         down again when the phone comes back — the plugin's boot receiver
+         does that for the notifications. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!-- SCHEDULE_EXACT_ALARM rather than USE_EXACT_ALARM: the second needs no
+         permission dialog but is audited by Play as an alarm-clock capability,
+         and this app is not a clock. So the reader is ASKED — see
+         PrayerNotifications.requestExactAlarms — and if they say no the alarms
+         are still laid down inexactly rather than not at all. A call four
+         minutes late beats a call that never comes. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <!-- The urgent-report alarm buzzes as well as sounds — see AlarmSound. The
+         one phone that will not make a noise is the one somebody has muted at
+         hardware level, and it is nearly always the phone of a person in a
+         meeting rather than asleep. Granted at install, no dialog. -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- Backup is off on purpose: the Supabase session (a live refresh token)
+         and other prefs live in this app's private storage, and auto-backup
+         would carry them off the device into cloud backups and adb extraction.
+         Accounts are re-entered by signing in; a token must not outlive its
+         phone. -->
+    <application
+        android:label="@string/app_name"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:enableOnBackInvokedCallback="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- flutter_local_notifications only declares POST_NOTIFICATIONS and
+             VIBRATE in its own manifest; anything that SCHEDULES has to be
+             declared by the app. The first receiver is what actually shows a
+             notification when its alarm fires; the second re-lays every pending
+             one after a reboot or an update, without which the prayer alerts
+             would go quiet until the app was next opened. -->
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+            android:exported="false" />
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- url_launcher: opening a module's signed PDF link in a browser/viewer. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
+    </queries>
+</manifest>

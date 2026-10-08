@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The name under the launcher icon. Android picks the folder by the DEVICE
+    language, not by the language chosen inside the app: switching the app to
+    English does not rename the icon on an Arabic phone, and it should not —
+    the home screen is the system's, and it speaks the system's language.
+-->
+<resources>
+    <string name="app_name">Hajj Operations</string>
+</resources>

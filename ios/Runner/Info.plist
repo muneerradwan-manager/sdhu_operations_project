@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Hajj Operations</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ar</string>
+		<string>en</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>hajjoperations</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<!-- HTTPS only, which is exempt. Declared here so App Store Connect stops
+	     asking the export-compliance question on every upload. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<!-- iOS shows these sentences verbatim in the system prompt, and refuses
+	     to show the prompt at all if the key is absent: the call returns
+	     denied and nothing on screen explains why. Arabic, because the
+	     people holding these phones read Arabic. -->
+	<key>NSCameraUsageDescription</key>
+	<string>لالتقاط صورة تُرفق بالمهمة أو البلاغ، ولمسح رمز QR.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>لإرفاق صورة أو مقطع مصوّر محفوظ على جهازك.</string>
+	<!-- Add-only access, asked by the share sheet itself: sharing the place
+	     QR code offers «حفظ الصورة», and iOS terminates the app the moment
+	     that is tapped if this key is missing. -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>لحفظ رمز QR أو الصورة المشاركة في مكتبة الصور.</string>
+	<!-- When-in-use only. The app asks for a position while a screen is open
+	     — تسجيل حضور، اختيار موقع على الخريطة — and never in the background,
+	     so NSLocationAlwaysAndWhenInUseUsageDescription is deliberately absent. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>لتسجيل موقعك عند تسجيل الحضور وتحديد المواقع على الخريطة.</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>UIWindowScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>flutter</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<!-- firebase_messaging: lets a notification wake the app to handle it. -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

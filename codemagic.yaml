@@ -1,0 +1,269 @@
+# ============================================================
+#  Codemagic — the macOS this project does not own
+#
+#  The iOS half of a Flutter app cannot be built on Windows: it needs Xcode,
+#  and Xcode needs a Mac. This file rents one per build.
+#
+#  Note for anyone following Codemagic's docs: the "building a native iOS app"
+#  guide is NOT this. That one drives `xcodebuild` against an Xcode project.
+#  A Flutter app has to run `flutter pub get` first — it is what writes
+#  ios/Flutter/Generated.xcconfig, which the Xcode project reads for the
+#  Flutter root and the build mode — and then `flutter build`, which compiles
+#  the Dart. Skip that and the build either fails outright or produces a shell
+#  with no application in it.
+# ============================================================
+
+definitions:
+  # ----------------------------------------------------------
+  # .env is an ASSET (see pubspec.yaml `assets:`) and it is gitignored, so a
+  # CI checkout does not have one and `flutter build` stops at
+  # "asset does not exist: .env" before it compiles a line.
+  #
+  # These are the client-side keys — the Supabase anon key is meant to be
+  # public and is held by row-level security, not by secrecy — but they are
+  # kept out of the repository all the same, so the file is rebuilt here from
+  # Codemagic variables.
+  #
+  # The same three keys .github/workflows/site.yml already writes from repo
+  # secrets, and the same names as .env.example. Three places now say this
+  # list; they are meant to agree, and a fourth key goes in all of them.
+  #
+  # Set them once in Codemagic under
+  #   Teams / Personal account -> Environment variables -> group `hajj_env`
+  # as SUPABASE_URL, SUPABASE_ANON_KEY, GOOGLE_WEB_CLIENT_ID.
+  # ----------------------------------------------------------
+  write_env: &write_env
+    name: Write .env from environment variables
+    script: |
+      set -e
+      for key in SUPABASE_URL SUPABASE_ANON_KEY GOOGLE_WEB_CLIENT_ID; do
+        eval "value=\$$key"
+        if [ -z "$value" ]; then
+          echo "Missing $key — add it to the 'hajj_env' variable group." >&2
+          exit 1
+        fi
+      done
+      cat > .env <<EOF
+      SUPABASE_URL=$SUPABASE_URL
+      SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+      GOOGLE_WEB_CLIENT_ID=$GOOGLE_WEB_CLIENT_ID
+      EOF
+      echo "wrote .env with $(wc -l < .env) lines"
+
+  verify: &verify
+    name: Analyze and test
+    script: |
+      set -e
+      flutter analyze
+      flutter test
+    # Deliberately before the iOS build. The suite runs in well under a minute
+    # and an iOS build is twenty; failing on the cheap step first is the whole
+    # point of running them in this order.
+
+workflows:
+  # ==========================================================
+  #  Works today, with no Apple Developer account.
+  #
+  #  Produces an unsigned Runner.app: enough to prove the project compiles,
+  #  links and bundles on iOS, and to run in the Simulator. It CANNOT be
+  #  installed on a real iPhone — that needs signing, which needs the
+  #  membership. Use this until the account exists.
+  # ==========================================================
+  ios-unsigned:
+    name: iOS — build unsigned
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    environment:
+      flutter: 3.47.5
+      xcode: latest
+      cocoapods: default
+      groups:
+        - hajj_env
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+
+    scripts:
+      - *write_env
+
+      - name: Fetch packages
+        script: flutter pub get
+
+      - *verify
+
+      # `flutter pub get` above has written Generated.xcconfig, so the Podfile
+      # can find FLUTTER_ROOT. Doing these in the other order is the usual
+      # first-build failure.
+      #
+      # Only when there IS a Podfile. Every plugin here currently resolves
+      # through Swift Package Manager, so Flutter does not write one and a bare
+      # `pod install` stops the build with "No Podfile found". Flutter brings
+      # the Podfile back by itself the day a plugin needs CocoaPods.
+      - name: Install pods
+        script: |
+          set -e
+          if [ -f ios/Podfile ]; then cd ios && pod install; fi
+
+      - name: Build (no code signing)
+        script: flutter build ios --release --no-codesign
+
+    artifacts:
+      - build/ios/iphoneos/*.app
+      - build/ios/**/*.dSYM
+      - flutter_drive.log
+
+    publishing:
+      email:
+        recipients:
+          - ghaith.audi.its@gmail.com
+        notify:
+          success: false
+          failure: true
+
+  # ==========================================================
+  #  For Appetize, and for anyone who wants to hold the app without an
+  #  iPhone in the room.
+  #
+  #  Appetize runs iOS apps in a SIMULATOR, so it needs a simulator build —
+  #  `ios-unsigned` above produces an iphoneos/arm64 bundle for real hardware
+  #  and Appetize will not take it. This is the same source, built for the
+  #  other architecture.
+  #
+  #  Debug, and not by choice: Flutter cannot AOT-compile for the simulator,
+  #  so `--simulator` forces debug mode and any other mode exits with
+  #  "RELEASE mode is not supported for simulators". The app therefore runs
+  #  slower than it will on a phone and carries the debug banner. It is for
+  #  showing and trying, not for judging performance.
+  #
+  #  Run it from the Codemagic UI when a build is wanted; it is not on the
+  #  push trigger, because every push does not need one.
+  # ==========================================================
+  ios-simulator:
+    name: iOS — build for the Simulator (Appetize)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    environment:
+      flutter: 3.47.5
+      xcode: latest
+      cocoapods: default
+      groups:
+        - hajj_env
+
+    scripts:
+      - *write_env
+
+      - name: Fetch packages
+        script: flutter pub get
+
+      - *verify
+
+      - name: Install pods
+        script: |
+          set -e
+          if [ -f ios/Podfile ]; then cd ios && pod install; fi
+
+      - name: Build for the simulator
+        script: flutter build ios --simulator --debug
+
+    # Codemagic zips a .app directory on its way out, which is the shape
+    # Appetize's upload wants — a .zip with the .app inside it.
+    artifacts:
+      - build/ios/iphonesimulator/*.app
+
+    publishing:
+      email:
+        recipients:
+          - ghaith.audi.its@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  # ==========================================================
+  #  TestFlight. Commented out because running it before the pieces below
+  #  exist fails at signing, several minutes in, with an error about
+  #  provisioning profiles that says nothing about what is actually missing.
+  #
+  #  Turn it on once ALL of these are true:
+  #
+  #   1. Apple Developer Program membership (99 USD/year).
+  #   2. The bundle id com.shud.hajjoperations is registered on the Apple
+  #      Developer portal — it must match ios/Runner.xcodeproj exactly.
+  #   3. An App Store Connect API key (.p8) is uploaded to Codemagic under
+  #      Teams -> Integrations -> Developer Portal, named `app_store_key`.
+  #   4. The app record exists in App Store Connect.
+  #
+  #  Firebase is a separate question from signing: push and Crashlytics stay
+  #  off on iOS until `flutterfire configure` adds the iOS app and commits
+  #  ios/Runner/GoogleService-Info.plist. The build succeeds without it —
+  #  bootstrap.dart catches the UnsupportedError — it just has no push.
+  # ==========================================================
+  #
+  # ios-testflight:
+  #   name: iOS — signed, to TestFlight
+  #   instance_type: mac_mini_m2
+  #   max_build_duration: 90
+  #
+  #   integrations:
+  #     app_store_connect: app_store_key
+  #
+  #   environment:
+  #     flutter: 3.47.5
+  #     xcode: latest
+  #     cocoapods: default
+  #     groups:
+  #       - hajj_env
+  #     ios_signing:
+  #       distribution_type: app_store
+  #       bundle_identifier: com.shud.hajjoperations
+  #
+  #   triggering:
+  #     events:
+  #       - tag
+  #     tag_patterns:
+  #       - pattern: 'v*'
+  #         include: true
+  #
+  #   scripts:
+  #     - *write_env
+  #
+  #     - name: Fetch packages
+  #       script: flutter pub get
+  #
+  #     - *verify
+  #
+  #     - name: Install pods
+  #       script: |
+  #         set -e
+  #         if [ -f ios/Podfile ]; then cd ios && pod install; fi
+  #
+  #     - name: Set up signing
+  #       script: xcode-project use-profiles
+  #
+  #     # The build number must rise with every upload or App Store Connect
+  #     # rejects it. pubspec's `version: 0.1.0+1` supplies 1 every time, so
+  #     # the CI build counter is used instead of the file.
+  #     - name: Build ipa
+  #       script: |
+  #         set -e
+  #         flutter build ipa --release \
+  #           --build-name=$(grep '^version:' pubspec.yaml | sed 's/version: *//' | cut -d+ -f1) \
+  #           --build-number=$(($(app-store-connect get-latest-testflight-build-number \
+  #             --bundle-id com.shud.hajjoperations) + 1)) \
+  #           --export-options-plist=/Users/builder/export_options.plist
+  #
+  #   artifacts:
+  #     - build/ios/ipa/*.ipa
+  #     - /tmp/xcodebuild_logs/*.log
+  #     - build/ios/**/*.dSYM
+  #
+  #   publishing:
+  #     app_store_connect:
+  #       auth: integration
+  #       submit_to_testflight: true

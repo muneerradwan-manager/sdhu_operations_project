@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Resources the release shrinker must not remove.
+
+    ic_stat_prayer is named only from Dart (prayer_notifications.dart), as a
+    string the plugin resolves at runtime. Nothing in the Java/Kotlin code
+    refers to it, so R8 sees it as unused and strips it from a release build,
+    and the prayer notification then fails to show on exactly the build
+    people install.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_prayer" />

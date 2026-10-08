@@ -1,0 +1,121 @@
+# Publishes the web build to GitHub Pages, on every push.
+#
+# This exists because the site was five weeks stale while the branch it is
+# built from moved 46 commits ahead of it. Nothing was broken: publishing was
+# `tool/deploy_web.ps1`, run by hand, and a step that has to be remembered is a
+# step that eventually is not. The script stays — it is the way to publish from
+# a machine without pushing — and this is the same sequence, run by the server.
+#
+# THE BRANCH. `main`, which is the trunk again as of this commit. It had sat at
+# the initial scaffold for 111 commits while the work went to a branch that was
+# never merged back, and this file first pointed at that branch because
+# publishing from main would have replaced the site with an empty app. Two
+# permanently-identical branches are one branch with extra steps; there is one
+# now, and the site follows it.
+#
+# THE DESTINATION. It force-pushes a `gh-pages` branch rather than using
+# `actions/deploy-pages`, because this repository's Pages source is set to
+# "Deploy from a branch". The artifact route needs that setting changed to
+# "GitHub Actions" in the repository's own configuration — a change no file
+# here records and nobody would connect to a broken deploy months later. The
+# branch is replaced whole every time: it holds build output, not history.
+name: site
+
+on:
+  push:
+    branches: [main]
+  # So a build can be re-run without an empty commit — after a secret is fixed,
+  # or to put the site back after somebody pushed something they regret.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Two pushes a minute apart must not race to force-push the same branch; the
+# later one wins and the earlier is abandoned mid-build rather than landing on
+# top of it.
+concurrency:
+  group: site
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          # Pinned rather than "latest stable": a toolchain that changes under
+          # a project without anybody choosing it is how a green branch starts
+          # failing on a morning nobody touched it.
+          flutter-version: 3.47.5
+          channel: stable
+          cache: true
+
+      # `.env` is a Flutter ASSET — pubspec declares it, and the build fails
+      # outright without it — but it is gitignored, so a fresh checkout has
+      # none. It is written here from repository secrets.
+      #
+      # Secrets for values that are not secret, and that is deliberate. Every
+      # one of these ships inside the bundle and can be read out of it; see
+      # `test/env_secrets_test.dart`, which is what keeps anything that must
+      # NOT ship out of this file. They are held as secrets so that the
+      # .gitignore rule keeps meaning what it says, and so the day a fourth
+      # key is added there is one obvious place it belongs.
+      - name: write .env
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
+        run: |
+          missing=""
+          for key in SUPABASE_URL SUPABASE_ANON_KEY GOOGLE_WEB_CLIENT_ID; do
+            [ -n "${!key}" ] || missing="$missing $key"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::missing repository secrets:$missing"
+            echo "Settings / Secrets and variables / Actions — see .env.example"
+            exit 1
+          fi
+          {
+            echo "SUPABASE_URL=$SUPABASE_URL"
+            echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY"
+            echo "GOOGLE_WEB_CLIENT_ID=$GOOGLE_WEB_CLIENT_ID"
+          } > .env
+
+      - run: flutter pub get
+
+      # The site is a gate, not a mirror. A build that analyses clean and passes
+      # its tests is the only one worth putting in front of anybody, and a push
+      # that breaks either should fail here rather than at a hotel in Makkah.
+      - run: flutter analyze
+      - run: flutter test
+
+      # A PROJECT page — github.io/<user>/hajjoperations/ — so the app is served
+      # from a subdirectory, and the default `<base href="/">` would send every
+      # asset request to the domain root: a white screen and a console full of
+      # 404s with nothing to say why. Taken from the repository's own name
+      # rather than typed, so renaming it does not silently break the paths.
+      - name: build
+        run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
+
+      # Without this GitHub runs the output through Jekyll, which silently drops
+      # anything beginning with an underscore. Flutter emits none today; it
+      # costs an empty file not to depend on that staying true.
+      - run: touch build/web/.nojekyll
+
+      - name: publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd build/web
+          git init -q -b gh-pages
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git remote add origin \
+            "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git add -A
+          git commit -q -m "build of ${GITHUB_SHA:0:7} from $GITHUB_REF_NAME"
+          git push -q -f origin gh-pages
+          echo "published -> https://${GITHUB_REPOSITORY%%/*}.github.io/${GITHUB_REPOSITORY#*/}/" >> "$GITHUB_STEP_SUMMARY"
