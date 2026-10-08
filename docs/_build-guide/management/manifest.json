@@ -1,0 +1,192 @@
+[
+ {
+  "key": "home",
+  "file": "001-home.png",
+  "caption": "الواجهة على شاشة واسعة: القائمة الثابتة إلى اليمين والخريطة التشغيلية في الوسط"
+ },
+ {
+  "key": "roadmap-build",
+  "file": "002-roadmap-build.png",
+  "caption": "مرحلة «بناء العمل» في الخريطة التشغيلية وخطواتها"
+ },
+ {
+  "key": "seasons",
+  "file": "003-seasons.png",
+  "caption": "المواسم: الموسم الحالي والمواسم السابقة"
+ },
+ {
+  "key": "season-open",
+  "file": "004-season-open.png",
+  "caption": "صفحة الموسم الحالي ومشاركوه"
+ },
+ {
+  "key": "reference",
+  "file": "005-reference.png",
+  "caption": "البيانات المرجعية: الأماكن وتقسيمات الملفات والبعثة"
+ },
+ {
+  "key": "reference-hotels",
+  "file": "006-reference-hotels.png",
+  "caption": "قائمة الفنادق"
+ },
+ {
+  "key": "reference-jobs",
+  "file": "007-reference-jobs.png",
+  "caption": "قائمة الوصف الوظيفي"
+ },
+ {
+  "key": "approvals",
+  "file": "008-approvals.png",
+  "caption": "اعتماد الحسابات: التسجيلات المنتظرة"
+ },
+ {
+  "key": "employees",
+  "file": "009-employees.png",
+  "caption": "الموظفون: الدائمون والخارجيون، مع البحث والفلاتر"
+ },
+ {
+  "key": "employee-open",
+  "file": "010-employee-open.png",
+  "caption": "صفحة موظف"
+ },
+ {
+  "key": "employee-open-2",
+  "file": "011-employee-open-2.png",
+  "caption": "بقية صفحة الموظف"
+ },
+ {
+  "key": "employees-external",
+  "file": "012-employees-external.png",
+  "caption": "الموظفون الخارجيون"
+ },
+ {
+  "key": "permissions",
+  "file": "013-permissions.png",
+  "caption": "الصلاحيات: مجموعات الصلاحيات وما يفتحه كلٌّ منها"
+ },
+ {
+  "key": "permissions-2",
+  "file": "014-permissions-2.png",
+  "caption": "بقية مجموعات الصلاحيات"
+ },
+ {
+  "key": "modules-manage",
+  "file": "015-modules-manage.png",
+  "caption": "إدارة الملفات التشغيلية"
+ },
+ {
+  "key": "module-new",
+  "file": "016-module-new.png",
+  "caption": "إنشاء ملف تشغيلي جديد"
+ },
+ {
+  "key": "module-new-2",
+  "file": "017-module-new-2.png",
+  "caption": "بقية نموذج الملف الجديد"
+ },
+ {
+  "key": "tasks-manage",
+  "file": "018-tasks-manage.png",
+  "caption": "لوحة المهام: ما أسندتَه إلى الآخرين"
+ },
+ {
+  "key": "task-assign",
+  "file": "019-task-assign.png",
+  "caption": "إسناد مهمة إلى موظف"
+ },
+ {
+  "key": "forms",
+  "file": "020-forms.png",
+  "caption": "نماذج التقييم"
+ },
+ {
+  "key": "form-new",
+  "file": "021-form-new.png",
+  "caption": "كتابة نموذج تقييم جديد"
+ },
+ {
+  "key": "circulars-manage",
+  "file": "022-circulars-manage.png",
+  "caption": "إدارة القرارات والتعميمات"
+ },
+ {
+  "key": "circular-new",
+  "file": "023-circular-new.png",
+  "caption": "إدخال قرار أو تعميم جديد"
+ },
+ {
+  "key": "notifications",
+  "file": "024-notifications.png",
+  "caption": "الإشعارات، وزر إرسال إشعار"
+ },
+ {
+  "key": "notify-new",
+  "file": "025-notify-new.png",
+  "caption": "إرسال إشعار إلى أشخاص أو ملف أو البعثة كلها"
+ },
+ {
+  "key": "travel",
+  "file": "026-travel.png",
+  "caption": "رحلات الموسم: القدوم والتنقّل الداخلي والعودة"
+ },
+ {
+  "key": "trip-open",
+  "file": "027-trip-open.png",
+  "caption": "تفاصيل رحلة"
+ },
+ {
+  "key": "trip-new",
+  "file": "028-trip-new.png",
+  "caption": "تسجيل رحلة جديدة"
+ },
+ {
+  "key": "dashboard",
+  "file": "029-dashboard.png",
+  "caption": "لوحة المؤشرات"
+ },
+ {
+  "key": "dashboard-2",
+  "file": "030-dashboard-2.png",
+  "caption": "بقية لوحة المؤشرات: الأشخاص والملفات"
+ },
+ {
+  "key": "map",
+  "file": "031-map.png",
+  "caption": "خريطة الموسم"
+ },
+ {
+  "key": "presence",
+  "file": "032-presence.png",
+  "caption": "سجل الدوام: من حضر، وأين، ومتى"
+ },
+ {
+  "key": "incidents",
+  "file": "033-incidents.png",
+  "caption": "البلاغات العاجلة كما تصل إلى غرفة العمليات"
+ },
+ {
+  "key": "complaints-manage",
+  "file": "034-complaints-manage.png",
+  "caption": "سجل الشكاوى"
+ },
+ {
+  "key": "audit",
+  "file": "035-audit.png",
+  "caption": "سجل الأحداث: من فعل ماذا ومتى"
+ },
+ {
+  "key": "evaluations-manage",
+  "file": "036-evaluations-manage.png",
+  "caption": "سجل التقييمات وعلاماتها"
+ },
+ {
+  "key": "export",
+  "file": "037-export.png",
+  "caption": "تصدير البيانات: اختر الجدول أولاً"
+ },
+ {
+  "key": "export-columns",
+  "file": "038-export-columns.png",
+  "caption": "اختيار الأعمدة وصيغة الملف للتصدير"
+ }
+]

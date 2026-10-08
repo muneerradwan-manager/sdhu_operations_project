@@ -1,0 +1,16 @@
+# Produced by the capture and build runs; the guides themselves (.docx) live in ../
+.venv/
+shots/
+jpg/
+*/shots/
+*/jpg/
+state-*.json
+__pycache__/
+
+# Throwaway runs and logs
+explore/
+anontest/
+dbg/
+*.log
+*/review-*.jpg
+*/ascii_seen.txt

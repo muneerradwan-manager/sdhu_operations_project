@@ -1,0 +1,162 @@
+[
+ {
+  "key": "login",
+  "file": "001-login.png",
+  "caption": "شاشة تسجيل الدخول"
+ },
+ {
+  "key": "login-filled",
+  "file": "002-login-filled.png",
+  "caption": "البريد الإلكتروني وكلمة المرور قبل الضغط على «تسجيل الدخول»"
+ },
+ {
+  "key": "register",
+  "file": "003-register.png",
+  "caption": "شاشة إنشاء حساب جديد"
+ },
+ {
+  "key": "login-settings",
+  "file": "004-login-settings.png",
+  "caption": "إعدادات اللغة والمظهر قبل الدخول"
+ },
+ {
+  "key": "home",
+  "file": "005-home.png",
+  "caption": "الشاشة الرئيسية: مواقيت الصلاة والخريطة التشغيلية"
+ },
+ {
+  "key": "home-run",
+  "file": "006-home-run.png",
+  "caption": "مرحلة «تشغيل الموسم» في الخريطة التشغيلية: خطواتها مفتوحة للجميع"
+ },
+ {
+  "key": "drawer",
+  "file": "007-drawer.png",
+  "caption": "القائمة الجانبية: أقسام التطبيق بحسب صلاحياتك"
+ },
+ {
+  "key": "drawer-2",
+  "file": "008-drawer-2.png",
+  "caption": "بقية القائمة الجانبية"
+ },
+ {
+  "key": "notifications",
+  "file": "009-notifications.png",
+  "caption": "الإشعارات وفلاترها"
+ },
+ {
+  "key": "profile",
+  "file": "010-profile.png",
+  "caption": "ملفي الشخصي"
+ },
+ {
+  "key": "profile-2",
+  "file": "011-profile-2.png",
+  "caption": "المعلومات الشخصية وبيانات التواصل في الملف"
+ },
+ {
+  "key": "profile-edit",
+  "file": "012-profile-edit.png",
+  "caption": "تعديل الملف الشخصي"
+ },
+ {
+  "key": "profile-edit-2",
+  "file": "013-profile-edit-2.png",
+  "caption": "أرقام الهاتف والوثائق في تعديل الملف"
+ },
+ {
+  "key": "password",
+  "file": "014-password.png",
+  "caption": "تغيير كلمة المرور"
+ },
+ {
+  "key": "settings",
+  "file": "015-settings.png",
+  "caption": "الإعدادات: الحساب واللغة والمظهر"
+ },
+ {
+  "key": "settings-2",
+  "file": "016-settings-2.png",
+  "caption": "بقية الإعدادات"
+ },
+ {
+  "key": "modules",
+  "file": "017-modules.png",
+  "caption": "الملفات التشغيلية المسندة إليك"
+ },
+ {
+  "key": "tasks",
+  "file": "018-tasks.png",
+  "caption": "مهامي وفلاترها"
+ },
+ {
+  "key": "task-new",
+  "file": "019-task-new.png",
+  "caption": "نافذة مهمة جديدة"
+ },
+ {
+  "key": "checkins",
+  "file": "020-checkins.png",
+  "caption": "سجلّ حضوري"
+ },
+ {
+  "key": "checkin-scan",
+  "file": "021-checkin-scan.png",
+  "caption": "شاشة مسح رمز المكان"
+ },
+ {
+  "key": "incident",
+  "file": "022-incident.png",
+  "caption": "بلاغ عاجل"
+ },
+ {
+  "key": "incident-filled",
+  "file": "023-incident-filled.png",
+  "caption": "بلاغ مكتوب قبل الإرسال"
+ },
+ {
+  "key": "incident-about",
+  "file": "024-incident-about.png",
+  "caption": "ربط البلاغ بملف أو مهمة أو مكان"
+ },
+ {
+  "key": "my-incidents",
+  "file": "025-my-incidents.png",
+  "caption": "بلاغاتي وحالة كلٍّ منها"
+ },
+ {
+  "key": "reports",
+  "file": "026-reports.png",
+  "caption": "القرارات والتعميمات"
+ },
+ {
+  "key": "complaints",
+  "file": "027-complaints.png",
+  "caption": "شكاواي"
+ },
+ {
+  "key": "complaint-new",
+  "file": "028-complaint-new.png",
+  "caption": "تقديم شكوى جديدة"
+ },
+ {
+  "key": "evaluations",
+  "file": "029-evaluations.png",
+  "caption": "التقييمات المكلَّف بها"
+ },
+ {
+  "key": "evaluation-open",
+  "file": "030-evaluation-open.png",
+  "caption": "فتح تقييم من القائمة"
+ },
+ {
+  "key": "journey",
+  "file": "031-journey.png",
+  "caption": "مساري: رحلات القدوم والتنقّل والعودة"
+ },
+ {
+  "key": "outbox",
+  "file": "032-outbox.png",
+  "caption": "بانتظار الإرسال: ما كُتب دون اتصال"
+ }
+]
