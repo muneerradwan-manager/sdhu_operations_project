@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 /// Single source of truth for iconography (Iconsax). Semantic names so screens

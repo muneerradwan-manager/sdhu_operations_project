@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdhu_operations_project/features/audit/domain/audit_event.dart';
 import 'package:sdhu_operations_project/features/audit/domain/audit_summary.dart';
 import 'package:sdhu_operations_project/features/audit/presentation/widgets/audit_pulse.dart';
+import 'package:sdhu_operations_project/core/l10n/app_delegates.dart';
 import 'package:sdhu_operations_project/l10n/app_localizations.dart';
 
 /// The log describing itself.
@@ -118,7 +119,7 @@ void main() {
   group('the pulse', () {
     Widget wrap(AuditSummary summary) => MaterialApp(
       locale: const Locale('en'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(
         body: SizedBox(

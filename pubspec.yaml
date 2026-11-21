@@ -17,6 +17,7 @@ dependencies:
   # ----------------------------------------------------------
   flutter:
     sdk: flutter
+  material_ui: ^1.11.0    # Material widgets (moved out of the SDK in Flutter 3.50)
   flutter_dotenv: ^6.0.1
 
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Outlined "Continue with Google" button with a drawn G mark (no asset needed).
 class GoogleButton extends StatelessWidget {

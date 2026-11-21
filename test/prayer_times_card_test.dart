@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdhu_operations_project/core/theme/app_theme.dart';
@@ -7,6 +7,7 @@ import 'package:sdhu_operations_project/features/prayer_times/data/prayer_times_
 import 'package:sdhu_operations_project/features/prayer_times/domain/prayer_day.dart';
 import 'package:sdhu_operations_project/features/prayer_times/domain/prayer_fix.dart';
 import 'package:sdhu_operations_project/features/prayer_times/presentation/widgets/prayer_times_card.dart';
+import 'package:sdhu_operations_project/core/l10n/app_delegates.dart';
 import 'package:sdhu_operations_project/l10n/app_localizations.dart';
 
 /// What the card SAYS, in the three states a reader can actually catch it in.
@@ -69,7 +70,7 @@ void main() {
   }) {
     return MaterialApp(
       locale: locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.dark(),
       home: Scaffold(

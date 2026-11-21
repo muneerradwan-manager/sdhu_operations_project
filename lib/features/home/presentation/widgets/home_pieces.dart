@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/theme/glass_tokens.dart';
 import '../../../prayer_times/presentation/widgets/prayer_times_card.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdhu_operations_project/core/l10n/localized_name.dart';
@@ -7,6 +7,7 @@ import 'package:sdhu_operations_project/features/modules/application/module_edit
 import 'package:sdhu_operations_project/features/modules/data/modules_repository.dart';
 import 'package:sdhu_operations_project/features/modules/domain/module_type.dart';
 import 'package:sdhu_operations_project/features/modules/presentation/module_editor_screen.dart';
+import 'package:sdhu_operations_project/core/l10n/app_delegates.dart';
 import 'package:sdhu_operations_project/l10n/app_localizations.dart';
 
 /// The first step of the editor asks seven things, and for a long time it asked
@@ -66,7 +67,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: appLocalizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: BlocProvider<ModuleEditorCubit>.value(

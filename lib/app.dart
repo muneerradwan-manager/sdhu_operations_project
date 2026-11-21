@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bootstrap.dart';
@@ -18,6 +18,7 @@ import 'features/incidents/application/incident_alarm.dart';
 import 'features/incidents/presentation/widgets/incident_alarm_host.dart';
 import 'features/notifications/data/push_service.dart';
 import 'features/profile/data/profile_repository.dart';
+import 'core/l10n/app_delegates.dart';
 import 'l10n/app_localizations.dart';
 
 class HajjOperationsApp extends StatelessWidget {
@@ -172,7 +173,7 @@ class _AppViewState extends State<_AppView> {
       darkTheme: AppTheme.dark(solid: settings.solidSurfaces),
       themeMode: settings.themeMode,
       locale: settings.locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: _router,
       // The animated backdrop lives above the navigator's own background and
@@ -185,10 +186,19 @@ class _AppViewState extends State<_AppView> {
       // something you have to be on the right screen to be told about — and it
       // is handed the router because a dialog opened from here has no Navigator
       // above it to open on.
-      builder: (context, child) => IncidentAlarmHost(
-        router: _router,
-        child: SnackBarWidthCap(
-          child: AuroraBackground(child: child ?? const SizedBox.shrink()),
+      //
+      // MaterialUiCompatibilityBridge (outside everything) lets plugins that
+      // still import package:flutter/material.dart — fl_chart, flutter_map,
+      // printing, mobile_scanner… — see this app's theme and localizations.
+      // Remove once they all use material_ui (deprecated on purpose as a
+      // reminder).
+      // ignore: deprecated_member_use
+      builder: (context, child) => MaterialUiCompatibilityBridge(
+        child: IncidentAlarmHost(
+          router: _router,
+          child: SnackBarWidthCap(
+            child: AuroraBackground(child: child ?? const SizedBox.shrink()),
+          ),
         ),
       ),
     );

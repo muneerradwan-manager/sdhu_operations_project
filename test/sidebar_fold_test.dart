@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdhu_operations_project/core/router/app_router.dart';
 import 'package:sdhu_operations_project/features/auth/application/session_cubit.dart';
 import 'package:sdhu_operations_project/features/home/presentation/widgets/app_sidebar.dart';
 import 'package:sdhu_operations_project/features/profile/domain/profile.dart';
 import 'package:sdhu_operations_project/features/profile/domain/profile_enums.dart';
+import 'package:sdhu_operations_project/core/l10n/app_delegates.dart';
 import 'package:sdhu_operations_project/l10n/app_localizations.dart';
 
 /// The rail folds from 288 pixels down to 76 and back, and everything in it has
@@ -52,7 +53,7 @@ void main() {
     locale: direction == TextDirection.rtl
         ? const Locale('ar')
         : const Locale('en'),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    localizationsDelegates: appLocalizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: Scaffold(
       body: SizedBox(

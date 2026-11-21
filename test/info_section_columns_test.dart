@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sdhu_operations_project/core/widgets/info_section.dart';
 import 'package:sdhu_operations_project/core/widgets/responsive.dart';
+import 'package:sdhu_operations_project/core/l10n/app_delegates.dart';
 import 'package:sdhu_operations_project/l10n/app_localizations.dart';
 
 /// A profile is a dozen short values — a first name, a city, a date. One per
@@ -12,7 +13,7 @@ import 'package:sdhu_operations_project/l10n/app_localizations.dart';
 void main() {
   Widget inPane(double width, Widget child) => MaterialApp(
     locale: const Locale('en'),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    localizationsDelegates: appLocalizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: Scaffold(
       body: Center(
